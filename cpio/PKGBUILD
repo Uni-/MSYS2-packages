@@ -13,12 +13,29 @@ options=('staticlibs')
 source=(http://ftp.gnu.org/pub/gnu/cpio/cpio-${pkgver}.tar.gz)
 sha256sums=('08a35e92deb3c85d269a0059a27d4140a9667a6369459299d08c17f713a92e73')
 
+prepare() {
+  cd ${srcdir}/${pkgname}-${pkgver}
+
+  rm tests/interdir.at
+  rm tests/setstat01.at
+  rm tests/setstat02.at
+  rm tests/setstat03.at
+  rm tests/setstat04.at
+  rm tests/setstat05.at
+}
+
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
 
   ./configure --prefix=/usr
 
   make
+}
+
+check() {
+  cd ${srcdir}/${pkgname}-${pkgver}
+
+  make check
 }
 
 package() {
